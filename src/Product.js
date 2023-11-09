@@ -1,40 +1,36 @@
-// Products.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { Row, Col } from 'react-bootstrap'; // Assuming you're using Bootstrap components
+import Ecard from './Ecard'; // Import your Ecard component
+
 function Products() {
-  // Your products page UI code here
+  const base_url = 'https://fakestoreapi.com/products';
+  const [data, setData] = useState([]);
 
-      const base_url = 'https://fakestoreapi.com/products'
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(base_url);
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-      const [data,setData] = useState([])
-  
-      const fetctData= async()=>{
-          const response = await axios.get(base_url)
-          setData(response.data)
-      }
-      useEffect(()=>{
-          fetctData()
-      },[])
   return (
-        <div>
-            <Row className='eRow'>
-          
-                {
-                data.map((item)=>(
-                    <Col sm={12} md={6} lg={4} xl={3}>
-                    <Ecard className="hai" op={item}  />
-                    </Col>
-                ))
-                }
-            
-               
-            </Row>
-            
-        </div>
-      )
-  
+    <div>
+      <Row className='eRow'>
+        {data.map((item) => (
+          <Col sm={12} md={6} lg={4} xl={3} key={item.id}> {/* Don't forget to add a unique key */}
+            <Ecard op={item} /> {/* Assuming Ecard is a component for displaying product details */}
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
 }
 
 export default Products;

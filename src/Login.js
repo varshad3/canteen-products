@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Login.css'
+import Products from "./Product";
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +51,7 @@ const Login = (props) => {
           onClick={onButtonClick}
           value={"Log in"}
         />
+        <Products/>
       </div>
     </div>
   );
